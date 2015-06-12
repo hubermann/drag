@@ -12,28 +12,30 @@
 	width: 240px;
 	height: 100%;
 	top: 0;
-z-index: 100;
+	z-index: 100;
 	-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	transition:: 0.5s cubic-bezier(0,-0.09,0,1);
-}
-.cerrado{left: -240px;}
-.abierto{left: 0px; background: pink}
-.contenidoabierto{padding-left: 240px;}
-.contenidocerrado{padding-left: 0;}
-#contenido	{	-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+	}
+	.cerrado{left: -240px;}
+	.abierto{left: 0px; background: pink}
+	.contenidoabierto{padding-left: 240px;}
+	.contenidocerrado{padding-left: 0;}
+	#contenido	{	
+	-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
 	-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	transition:: 0.5s cubic-bezier(0,-0.09,0,1);}
+	transition:: 0.5s cubic-bezier(0,-0.09,0,1);
+	}
 
-#receptor{padding: .8em; border:1px dashed #f2f2f2;}
-.recibiendo{padding: 2em; background: #ccc;}
-.separar{padding: 2em; background: #f2f2f2;}
+	#receptor{padding: .8em; border:1px dashed #f2f2f2;}
+	.recibiendo{padding: 2em; background: #ccc;}
+	.separar{padding: 2em; background: #f2f2f2;}
 
-ul,li{list-style: none;}
+	ul,li{ list-style: none; }
 
 </style>
 
@@ -49,9 +51,9 @@ ul,li{list-style: none;}
 			<li>Contenidos</li>
 			<li>Contacto</li>
 			<li>Pie de Pagina</li>
-			
 		</ul>
 	</nav>
+
 	<div id="contenido" class="container-fluid ui-sortable cerrado">
 		<div class="col-lg-12">
 			<h3>Contenido</h3>
@@ -73,24 +75,21 @@ ul,li{list-style: none;}
 		showMenu= document.getElementById( 'showMenu' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
+		
+	//Funciones menu (ocultar mostrar)
+	showMenu.onclick = function() {
+		if ($('#ocultable').hasClass('abierto')) {
+	    	$( "#ocultable" ).removeClass( "abierto" ).addClass( "cerrado" );
+			$( "#contenido" ).removeClass( "contenidoabierto" ).addClass( "contenidocerrado" );
+		}else{
+			$( "#ocultable" ).removeClass( "cerrado" ).addClass( "abierto" );
+			$( "#contenido" ).removeClass( "contenidocerrado" ).addClass( "contenidoabierto" );
+		}
+	};
 
-showMenu.onclick = function() {
-	if ($('#ocultable').hasClass('abierto')) {
-    	$( "#ocultable" ).removeClass( "abierto" ).addClass( "cerrado" );
-		$( "#contenido" ).removeClass( "contenidoabierto" ).addClass( "contenidocerrado" );
-	}else{
-		$( "#ocultable" ).removeClass( "cerrado" ).addClass( "abierto" );
-		$( "#contenido" ).removeClass( "contenidocerrado" ).addClass( "contenidoabierto" );
-	}
-	console.log('abriendo');
-	
-};
-
-  $(function() {
-    $( "#receptor" ).sortable();
-    $( "#receptor" ).droppable();
-    $( "#receptor" ).disableSelection();
-  });
+	$(function() {
+		$( "#receptor" ).sortable( );
+	});
 
 </script>
 

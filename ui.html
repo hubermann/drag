@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sortable</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <style>
+  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+  li { }
+  .moviendo{width:100%; background: #f2f2f2; padding:1em;}
+  #sortable{width: 100%; padding: .8em 0;}
+  #sortable img{width: 100%; float: left;}
+  .imagenfull{width: 100%;}
+  </style>
+  
+</head>
+<body>
+ 
+<ul>
+  <li class="draggable" data-name="footer-1"><img src="imgs/footer-1.jpg" class="imagen" width="180"></li>
+  <li class="draggable" data-name="footer-2"><img src="imgs/footer-2.jpg" class="imagen" width="180"></li>
+  <li class="draggable" data-name="crew-1"><img src="imgs/crew-1.jpg" class="imagen" width="180"></li>
+  <li class="draggable" data-name="footer-1"><img src="imgs/footer-1.jpg" class="imagen" width="180"></li>
+</ul>
+ <!-- aqui recibo items -->
+<ul id="sortable">
+
+</ul>
+ 
+<script src="js/external/jquery/jquery.js"></script>
+<script src="js/jquery-ui.js"></script> 
+<script>
+  $(function() {
+    $( "#sortable" ).sortable({
+      revert: true,
+      placeholder: "moviendo"
+    });
+    $( ".draggable" ).draggable({
+      connectToSortable: "#sortable",
+      helper: "clone",
+      revert: "invalid",
+      start: function(){
+		contenido = $(this).data('name');
+		console.log(contenido);
+		},
+		stop: function(){
+			agrandar();
+		}
+    });
+    $( "ul, li" ).disableSelection();
+  });
+
+  function agrandar(){
+  	$('#sortable .imagen').addClass('imagenfull');
+  }
+  </script>
+</body>
+</html>
