@@ -30,9 +30,10 @@ z-index: 100;
 	transition:: 0.5s cubic-bezier(0,-0.09,0,1);}
 
 #receptor{padding: .8em; border:1px dashed #f2f2f2;}
-.recibiendo{padding: 2em; background: pink}
+.recibiendo{padding: 2em; background: #ccc;}
+.separar{padding: 2em; background: #f2f2f2;}
 
-
+ul,li{list-style: none;}
 
 </style>
 
@@ -41,17 +42,17 @@ z-index: 100;
 	<nav id="ocultable" class="cerrado">
 		<ul>
 			<li>Headers</li>
-			<li draggable="true" class="item" data-name="crew-1"><img src="crew-1.jpg" alt="" width="180"></li>
-			<li draggable="true" class="item" data-name="header-1"><img src="header-1.jpg" alt="" width="180"></li>
-			<li draggable="true" class="item" data-name="footer-1"><img src="footer-1.jpg" alt="" width="180"></li>
-			<li draggable="true" class="item" data-name="footer2"><img src="footer-2.jpg" alt="" width="180"></li>
+			<li draggable="true" class="item" data-name="crew-1"><img src="imgs/crew-1.jpg" alt="" width="180"></li>
+			<li draggable="true" class="item" data-name="header-1"><img src="imgs/header-1.jpg" alt="" width="180"></li>
+			<li draggable="true" class="item" data-name="footer-1"><img src="imgs/footer-1.jpg" alt="" width="180"></li>
+			<li draggable="true" class="item" data-name="footer-2"><img src="imgs/footer-2.jpg" alt="" width="180"></li>
 			<li>Contenidos</li>
 			<li>Contacto</li>
 			<li>Pie de Pagina</li>
 			
 		</ul>
 	</nav>
-	<div id="contenido" class="container-fluid cerrado">
+	<div id="contenido" class="container-fluid ui-sortable cerrado">
 		<div class="col-lg-12">
 			<h3>Contenido</h3>
 		<p id="showMenu">Mostrar/ocultar</p>
@@ -84,7 +85,13 @@ showMenu.onclick = function() {
 	console.log('abriendo');
 	
 };
-//$( ".item" ).sortable();
+
+  $(function() {
+    $( "#receptor" ).sortable();
+    $( "#receptor" ).droppable();
+    $( "#receptor" ).disableSelection();
+  });
+
 </script>
 
 </body>
