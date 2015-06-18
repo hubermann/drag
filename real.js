@@ -3,14 +3,13 @@ $(document).ready(function(e) {
 	
 	//SETTINGS
 	var blocks = 	[
-					{"id":"0","type":"header","count":"22","name":"Headers"}, 
-					{"id":"1","type":"content","count":"37","name":"Content"}, 
-					{"id":"2","type":"price","count":"4","name":"Price Tables"}, 
-					{"id":"3","type":"projects","count":"3","name":"Projects"}, 
-					{"id":"4","type":"contacts","count":"4","name":"Contacts"}, 
-					{"id":"5","type":"crew","count":"3","name":"Crew"}, 
-					{"id":"6","type":"blog","count":"4","name":"Blogs"}, 
-					{"id":"7","type":"footer","count":"14","name":"Footer"}
+					{"id":"0","type":"header","count":"2","name":"Headers"}, 
+					{"id":"1","type":"content","count":"2","name":"Content"}, 
+					{"id":"2","type":"projects","count":"3","name":"Projects"}, 
+			
+					{"id":"3","type":"crew","count":"3","name":"Crew"}, 
+			
+					{"id":"4","type":"footer","count":"5","name":"Footer"}
 					];
 					
 	
@@ -146,7 +145,7 @@ $(document).ready(function(e) {
 		distance: 50,
 		drag: function(event, ui){
 			setTimeout(function(){
-				$('#blocksHolder #blocks li.placeholder').attr('style','height:100px');
+				$('#blocksHolder tras.placeholder').attr('style','height:100px');
 			},50);
 			$(window).mousemove(function( event ) {
 				var windowY = event.pageY - $(window).scrollTop();
@@ -242,6 +241,7 @@ $(document).ready(function(e) {
 	
 	
 	//Ajax Share 
+	/*
 	$('#share').mousedown(function() {
 		var signature = $(this).data('signature');
 		var timestamp = $(this).data('timestamp');
@@ -392,7 +392,7 @@ $(document).ready(function(e) {
 			}
 		}
 	});
-	
+		
 	//add button
 	var url = "../wp-admin/admin-ajax.php?action=dm_startup_api";
 		
@@ -402,7 +402,7 @@ $(document).ready(function(e) {
 	.done(function(data) {
 		if(data.status == 'purchased') $('.aboutMenu ul').append('<li class="getsf"><a target="_blank" href="/startup/?add-to-cart=109981">Add License</a></li>');
 	});
-	
+	*/
 	//Name for Project
 	var maxLetters = 35;
 	$('#project').bind('keyup keydown resize',function() {
@@ -455,7 +455,7 @@ $(document).ready(function(e) {
 		$('body').removeClass('noscroll');
 			$('#shareurl').addClass('notgenerated');
 	});
-	
+
 	//Show/Hide menu on empty
 	$('#blocks').click(function(){
 		if ($(this).hasClass('empty')){
@@ -522,6 +522,7 @@ $(document).ready(function(e) {
 			}
 		}
 	});
+	
 	
 });
 

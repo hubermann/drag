@@ -31,47 +31,66 @@
 	transition:: 0.5s cubic-bezier(0,-0.09,0,1);
 	}
 
-	#receptor{padding: .8em; border:1px dashed #f2f2f2;}
+	#receptor{padding: .8em; border:1px dashed #f2f2f2; width: 900px; margin:0 auto;}
 	.recibiendo{padding: 2em; background: #ccc;}
 	.separar{padding: 2em; background: #f2f2f2;}
 
 
 
   ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-  li { }
+
   .moviendo{width:100%; background: #f2f2f2; padding:1em;}
-  #sortable{width: 100%; padding: .8em 0;}
-  #sortable img{width: 100%; float: left;}
-  .imagenfull{width: 100%;}
+  #receptor{width: 100%; padding: .8em 0;}
+
 
   /**/
-	#papelera{width: 300px; height: 120px; margin: 0 auto; overflow: hidden; background: red; position: fixed;}
-	.oculta{top:-110px; }
+	#papelera{width: 100px; height: 120px; margin-left: 50%; overflow: hidden; background: red; position: fixed;}
+	.oculta{top:-40px; }
 	.visible{top:0px; }
+	.chau{border:1px solid red;}
+
+	.hovered{background: red}
+
+	#ocultable.active > * {
+	opacity:0.1;
+}
+
+#ocultable.hovered {
+	background-color: #F15656;
+	background-size:contain;
+}
+
+
+
   </style>
 </head>
 <body>
+<!-- papelera -->
 <div id="papelera" class="oculta"></div>
-	<nav id="ocultable" class="cerrado">
-		<ul>
-  <li class="draggable" data-name="footer-1"><img src="imgs/footer-1.jpg" class="imagen" width="180"></li>
-  <li class="draggable" data-name="footer-2"><img src="imgs/footer-2.jpg" class="imagen" width="180"></li>
-  <li class="draggable" data-name="crew-1"><img src="imgs/crew-1.jpg" class="imagen" width="180"></li>
-  <li class="draggable" data-name="footer-1"><img src="imgs/footer-1.jpg" class="imagen" width="180"></li>
-</ul>
-	</nav>
 
-	<div id="contenido" class="container-fluid ui-sortable cerrado">
-		<div class="col-lg-12">
-			<h3>Contenido</h3>
-		<p id="showMenu">Mostrar/ocultar</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa ipsum, velit necessitatibus, nesciunt harum, excepturi porro in sit nobis minus magnam dolorum adipisci vero recusandae. Ratione aspernatur iste, laborum.</p>
-		 <!-- aqui recibo items -->
-<ul id="sortable">
-<p onclick="showPapelera();">Show</p>
-</ul>
-		</div>
-	</div>
+<!-- Menu -->
+<nav id="ocultable" class="cerrado">
+	<ul>
+	  <li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	  <li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	  <li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	  <li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+</nav>
+
+<div id="contenido" class="container-fluid cerrado">
+<div class="col-lg-12">
+	<h3>Contenido</h3>
+	<p id="showMenu">Mostrar/ocultar</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa ipsum, velit necessitatibus, nesciunt harum, excepturi porro in sit nobis minus magnam dolorum adipisci vero recusandae. Ratione aspernatur iste, laborum.</p>
+	<p onclick="showPapelera();">Show</p>
+	<p onclick="hidePapelera();">Hide</p>
+ 	<!-- aqui recibo items -->
+	<ul id="receptor">
+
+	</ul>
+</div>
+</div>
 
 <script src="js/external/jquery/jquery.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -97,46 +116,83 @@
 
 
 $(function() {
-    $( "#sortable" ).sortable({
+    $( "#receptor" ).sortable({
       revert: true,
       placeholder: "moviendo"
+     
     });
-    $( ".draggable" ).draggable({
-      connectToSortable: "#sortable",
-      helper: "clone",
-      revert: "invalid",
-      start: function(){
+
+
+
+	$( ".draggable" ).draggable({
+		connectToSortable: "#receptor",
+		helper: "clone",
+		revert: "invalid",
+		start: function(){
 		contenido = $(this).data('name');
+		draggingElement = $('.ui-draggable-dragging img');
+		$('.ui-draggable-dragging img').attr('src',draggingElement.attr('src').replace('180','900'));
 		console.log(contenido);
+
 		},
 		drop: function(){
-			agrandar();
-			recontar();
-			$(this).addClass('eliminable');
+		agrandar();
+		recontar();
+		$(this).addClass('eliminable');
+		},
+		stop: function(event, ui){
+			
+			
+			
+			
+
 		}
-    });
-    
+});
 
-
-    $( "#papelera" ).sortable({
-      revert: true,
-      placeholder: "moviendo"
+    //Trash Objects
+	$('#papelera').droppable({
+		accept: "#receptor li",
+		tolerance: "touch",
+		start: function(){
+			showPapelera();
+		},
+		drop: function(event, ui) {
+			$(ui.draggable).remove();
+			$('#papelera').animate({height:1,opacity:0,borderWidth:0}, 250);
+			hidePapelera();
+        }
     });
 
     $( "ul, li" ).disableSelection();
 
+
+
   });
 	
   function showPapelera(){
-  	$( "#papelera" ).removeClass( "oculta" ).addClass( "visible" );
+  	$( "#papelera" ).addClass( "visible" );
   }
   function hidePapelera(){
   	$( "#papelera" ).removeClass( "visible" ).addClass( "oculta" );
   }
 
   function agrandar(){
-  	$('#sortable .imagen').addClass('imagenfull');
+  	$('#receptor .imagen').addClass('imagenfull');
   }
+
+
+//Max Size
+	function checkMaxSize(){
+		if ($("#blocks li:not(.placeholder)").size() < maxBlocks) {
+			$('#sideMenu').removeClass('disabled');
+		} else {
+			$('#sideMenu').addClass('disabled');
+		}
+	}
+	
+
+
+
 </script>
 
 </body>
