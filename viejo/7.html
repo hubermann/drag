@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>version 6</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<style>
+
+	
+/* menues */
+#menu-main{
+-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+transition:: 0.5s cubic-bezier(0,-0.09,0,1); display: block;}
+#menu-headers{
+-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+transition:: 0.5s cubic-bezier(0,-0.09,0,1);  left:-250px; z-index: 120; display: block;}
+.menu-hide{ float:left; width: 240px; margin-left:-250px;}
+.menu-visible{left:0; width: 240px; }
+  </style>
+
+<link rel="stylesheet" href="4.css">
+</head>
+<body>
+
+
+<!-- Menu -->
+<nav id="ocultable" class="cerrado">
+
+	<ul id="menu-main" class="menu-visible">
+	<li> <a onclick="showMenuHeaders();">Headers</a></li>
+	<li>Contenidos</li>
+	<li>Contacto</li>
+	<li>Pie de Pagina</li>
+	</ul>
+	<ul id="menu-headers" class=" menuopciones menu-hide">
+	<li><a onclick="showMenuMain();">Regresar</a></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	<li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+
+	<ul id="menu-crews" class="menuopciones menu-hide">
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	<li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+
+	<ul id="menu-footers" class="menuopciones menu-hide">
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	<li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+
+
+</nav>
+
+<div id="contenido" class="container-fluid cerrado">
+<div class="col-lg-12">
+	<h3>Contenido</h3>
+	<p id="showMenu">Mostrar/ocultar</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa ipsum, velit necessitatibus, nesciunt harum, excepturi porro in sit nobis minus magnam dolorum adipisci vero recusandae. Ratione aspernatur iste, laborum.</p>
+
+ 	<!-- aqui recibo items -->
+	<div id="receptorWrapp">
+		<ul id="receptor" class="empty">
+
+		</ul>
+
+	</div>
+</div>
+</div>
+
+<script src="js/external/jquery/jquery.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/drag.js"></script>
+
+
+<script>
+	var ocultable = document.getElementById( 'ocultable' ),
+		showMenu= document.getElementById( 'showMenu' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	//Funciones menu (ocultar mostrar)
+	showMenu.onclick = function() {
+		if ($('#ocultable').hasClass('abierto')) {
+	    	$( "#ocultable" ).removeClass( "abierto" ).addClass( "cerrado" );
+			$( "#contenido" ).removeClass( "contenidoabierto" ).addClass( "contenidocerrado" );
+			localStorage.setItem("menulateral", 0);
+		}else{
+			$( "#ocultable" ).removeClass( "cerrado" ).addClass( "abierto" );
+			$( "#contenido" ).removeClass( "contenidocerrado" ).addClass( "contenidoabierto" );
+			localStorage.setItem("menulateral", 1);
+		}
+	};
+
+
+$(function(e) {
+
+//SETTINGS
+	var blocks = 	[
+					{"id":"0","type":"header","count":"22","name":"Headers"}, 
+					{"id":"1","type":"content","count":"37","name":"Content"}, 
+					{"id":"2","type":"price","count":"4","name":"Price Tables"}, 
+					{"id":"3","type":"projects","count":"3","name":"Projects"}, 
+					{"id":"4","type":"contacts","count":"4","name":"Contacts"}, 
+					{"id":"5","type":"crew","count":"3","name":"Crew"}, 
+					{"id":"6","type":"blog","count":"4","name":"Blogs"}, 
+					{"id":"7","type":"footer","count":"14","name":"Footer"}
+					];
+					
+	
+	var maxBlocks = 30;
+		
+	//Check URL's Hash
+	var urlHash = window.location.hash.substring(1);
+	if (urlHash){
+		addSample();
+	}
+	
+	//Create Submenu From Array	
+	blocks.forEach(function(element){
+		$('#subMenu').append('<ul id="'+element.type+'"></ul>');
+		var blocksRows = [];
+		for (i = 0; i <= element.count; i++){
+			var elNum = i + 1;
+			blocksRows.push('<li data-id="'+element.id+'" data-name="'+element.type+'" data-number="'+elNum+'"><span>'+element.type+' #'+elNum+'</span><img src="components/180/'+element.type+'-'+elNum+'.jpg"></li>');
+		}
+		$('#subMenu ul#'+element.type).append(blocksRows.join('\n\n'));
+	});
+	
+	blocksRows = []; //clear array
+	
+	// Add Sample by String
+	function addSample(string){
+		
+		if (!string) {
+			var params = $.getUrlVars();
+			var structure = params.structure;
+		
+			if (params.name){
+				var projectName = params.name.split('_').join(' ');
+				$('#project').val(projectName.substring(0,maxLetters));	
+			}
+		}
+		
+		//should be like
+		
+		if (structure){
+			var parts = structure.split(',').slice(0,maxBlocks);
+			parts.forEach(function(block){
+				var types = block.split(':');
+				if ($.isArray(types)){
+					var id = types[0];
+					if (blocks[id]  !== undefined ) {
+						var name = blocks[id].type;
+						var number = types[1];
+						if($.isNumeric(number, name)) {
+							$('#blocks').removeClass('empty').append('<li data-id="'+id+'" data-name="'+name+'" data-number="'+number+'"><span>'+name+' #'+number+'</span><img src="components/900/'+name+'-'+number+'.jpg"></li>');
+						}
+					}
+				}
+			});
+		}
+		
+		$("#sortable").sortable("refresh");
+		MedirAltoBloques();
+		updateHash();
+	}
+	
+	//Update asd
+	function updateHash(){
+		
+		var urlParts = []
+
+		//get structure
+		var blocks = [];
+		$.map($("#blocks").children('li'), function(el){
+			blocks.push( $(el).data('id') + ':' + $(el).data('number') );
+		});
+		
+		if (blocks.length > 0) {
+			var hashURL = "structure=" + blocks.join(',');
+		}
+		
+		if (hashURL) {
+			
+			urlParts.push(hashURL);
+		
+			//get name
+			var projectName = $('#project').val().trim();
+			if (projectName) {
+				projectName = encodeURIComponent( projectName.split(' ').join('_') );
+				projectName = "name="+projectName;	
+				urlParts.push(projectName)
+			}
+			
+			window.location.hash = urlParts.join('&');
+		} else {
+			window.location.hash = "";
+		}
+	}
+	//
+var opcionesDeOrden = { 
+		opacity:0.75,
+		placeholder: "placeholder",
+		revert:300,
+		distance: 10,
+		refreshPositions: true,
+		start: function(event, ui){
+			$('.placeholder').height(ui.item.context.clientHeight);
+			MedirAltoBloques();
+		},
+		out: function( event, ui ){
+			setTimeout(function(){
+				MedirAltoBloques();
+			},50);
+		},
+		over: function( event, ui ){
+			MedirAltoBloques();
+		},
+		stop: function( event, ui ){
+			if (window.droppedData){
+				$(ui.item).attr('style','').find('img').attr('src',$(ui.item).attr('style','').find('img').attr('src').replace('180','900'));
+			}
+		}
+	};
+    $("#receptor").sortable(opcionesDeOrden).on( "sortstop", function( event, ui ) {
+		updateHash();
+		MedirAltoBloques();
+		mapearseleccionados();
+	});
+	
+	//Make Menu Items Draggable	
+	var opcionesDeArrastrables = {
+		connectToSortable: "#receptor",
+		addClasses: false,
+		scope: "#receptor",
+		helper: "clone",
+		appendTo: 'body',
+		distance: 50,
+		drag: function(event, ui){
+			setTimeout(function(){
+				$('#receptor li.placeholder').attr('style','height:140px');
+			},50);
+			$(window).mousemove(function( event ) {
+				var windowY = event.pageY - $(window).scrollTop();
+				var windowX = event.pageX;
+				
+				$('.ui-draggable-dragging').css('top',$(window).scrollTop() + windowY - 50).css('left',windowX-50).css('width','100px!important');
+				//var precentage = windowX / $(window).width();
+			});
+		},
+		start: function(event, ui){
+			
+        	window.droppedData = 'dragStart';
+			draggingElement = $('.ui-draggable-dragging img');
+			if (draggingElement.height() > 140)
+				draggingElement.height('140px');
+			
+		},
+		stop: function(event, ui){
+			setTimeout (function(){
+	        	window.droppedData = '';
+			},500);
+			
+			$('.placeholder').height($('.ui-draggable-dragging img').attr('src',draggingElement.attr('src').replace('180','900')).removeAttr('style').height());
+			
+			chequearAltoMaximo();
+			mapearseleccionados();
+		}
+    };
+	$('img').on('dragstart', function(event) { event.preventDefault(); });
+
+$( "#ocultable .draggable" ).draggable(opcionesDeArrastrables).click(function(){
+		//Clickable
+		if ($("#receptor li").size() < maxBlocks) {
+		
+			var newElement = $(this).clone().appendTo($('#receptor')).find('img').attr('src',$(this).attr('style','').find('img').attr('src').replace('180','900'));
+			newElement.load(function(e) {
+				setTimeout(function(){
+					var position = $('#receptor li:last-child').position();
+					$('body').finish().animate({scrollTop: position.top},500);
+				}, 250);
+			});
+			
+			$("#sortable").sortable("refresh");
+			MedirAltoBloques();
+			updateHash();
+			chequearAltoMaximo();
+		}
+	});
+	
+	//Trash Objects
+	$('#ocultable').droppable({
+		accept: "#receptor li",
+		activeClass: "active",
+		hoverClass: "hovered",
+		tolerance: "touch",
+		drop: function(event, ui) {
+			$(ui.draggable).remove();
+			$('.placeholder').animate({height:0,opacity:0,borderWidth:0}, 250);
+			chequearAltoMaximo();
+        }
+    });
+	
+	$('#ocultable img').droppable({
+		drop: function( event, ui ) {
+			$( this ).siblings( ".placeholder" ).remove();
+			$( "<li></li>" ).text( ui.draggable.text() ).insertAfter( this );
+		}
+	});
+	
+	//Change Size of Blocks Holder
+	function MedirAltoBloques(){
+		if ($("#receptor li").length){
+			$('#receptor').removeClass('empty');
+			$('#receptorWrapp').removeClass('hide-ui');
+			$('.footer').addClass('hidden');
+		} else {
+			$('#receptor').addClass('empty');
+			$('#receptorWrapp').addClass('hide-ui');
+			$('.footer').removeClass('hidden');
+		}	
+	}
+	
+	//Max Size
+	function chequearAltoMaximo(){
+		if ($("#receptor li:not(.placeholder)").size() < maxBlocks) {
+			$('#ocultable').removeClass('disabled');
+		} else {
+			$('#ocultable').addClass('disabled');
+		}
+	}
+	
+	MedirAltoBloques();
+	chequearAltoMaximo();
+
+
+  });
+
+ 
+
+
+function mapearseleccionados(){
+	var items = [];
+		$('#receptor').each(function(){
+
+    		$(this).find('li').each(function(){
+    		items.push( $(this).data('name') );
+      		//console.log($(this).data('name'));
+    	});
+   	
+   	console.log(items);
+    
+});
+
+
+localStorage.setItem("proyecto", items);		
+}
+
+
+
+
+
+function cleanProyect(){
+	localStorage.clear();
+}
+
+if (localStorage.getItem("proyecto") ) { 
+	//hay proyecto (se re-arma en base a LocalStorage)
+	armar();
+}else{
+	//no hay proyecto previo
+	localStorage.setItem("proyecto", "");
+}
+
+
+function armar(){
+	var previos = localStorage.getItem("proyecto");
+	var previos_array = previos.split(',');
+	if(previos_array){
+		previos_array.forEach(function(item) {
+	    	$('#receptor').append('<li class="draggable ui-draggable-handle" data-name="'+item+'" style=""><img src="imgs/900/'+item+'.jpg" class="imagen ui-droppable"></li>');
+		});
+	}
+}
+
+if(localStorage.getItem("menulateral") == 0){
+	
+	$( "#ocultable" ).removeClass( "abierto" ).addClass( "cerrado" );
+	$( "#contenido" ).removeClass( "contenidoabierto" ).addClass( "contenidocerrado" );
+	localStorage.setItem("menulateral", 0);
+
+}else if(localStorage.getItem("menulateral") == 1){
+	$( "#ocultable" ).removeClass( "cerrado" ).addClass( "abierto" );
+	$( "#contenido" ).removeClass( "contenidocerrado" ).addClass( "contenidoabierto" );
+	localStorage.setItem("menulateral", 1);
+}
+
+
+
+</script>
+<script type="text/javascript">
+	function showMenuMain(){
+		
+		$( "#menu-headers" ).removeClass( "menu-visible" ).addClass( "menu-hide" );
+		$( "#menu-main" ).removeClass( "menu-hide" ).addClass( "menu-visible" );
+	}
+
+	function showMenuHeaders(){
+		$( "#menu-main" ).removeClass( "menu-visible" ).addClass( "menu-hide" );
+		$( "#menu-headers" ).removeClass( "menu-hide" ).addClass( "menu-visible" );
+	}
+
+
+</script>
+</body>
+</html>

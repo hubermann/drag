@@ -2,142 +2,86 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>3</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-	<style>
-	body{margin:0; padding: 0;}
-	#ocultable{background: #47a3da;
-	position: fixed;
-	width: 240px;
-	height: 100%;
-	top: 0;
-	z-index: 100;
-	-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	transition:: 0.5s cubic-bezier(0,-0.09,0,1);
-	}
-	.cerrado{left: -240px;}
-	.abierto{left: 0px; background: pink}
-	.contenidoabierto{padding-left: 240px;}
-	.contenidocerrado{padding-left: 0;}
-	#contenido	{	
-	-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
-	transition:: 0.5s cubic-bezier(0,-0.09,0,1);
-	}
-
-	#receptor{padding: .8em; border:1px dashed #f2f2f2;}
-	.recibiendo{padding: 2em; background: #ccc;}
-	.separar{padding: 2em; background: #f2f2f2;}
+	<title>version limpia</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
 
 
-
-  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-  li { }
-  .moviendo{width:100%; background: #f2f2f2; padding:1em;}
-  #sortable{width: 100%; padding: .8em 0;}
-  #sortable img{width: 100%; float: left;}
-  .imagenfull{width: 100%;}
-
-  /**/
-	#papelera{width: 300px; height: 120px; margin: 0 auto; overflow: hidden; background: red; position: fixed;}
-	.oculta{top:-110px; }
-	.visible{top:0px; }
-  </style>
+	<link rel="stylesheet" href="estilos.css">
+	<link rel="stylesheet" href="menues.css">
 </head>
 <body>
-<div id="papelera" class="oculta"></div>
-	<nav id="ocultable" class="cerrado">
-		<ul>
-  <li class="draggable" data-name="footer-1"><img src="imgs/footer-1.jpg" class="imagen" width="180"></li>
-  <li class="draggable" data-name="footer-2"><img src="imgs/footer-2.jpg" class="imagen" width="180"></li>
-  <li class="draggable" data-name="crew-1"><img src="imgs/crew-1.jpg" class="imagen" width="180"></li>
-  <li class="draggable" data-name="footer-1"><img src="imgs/footer-1.jpg" class="imagen" width="180"></li>
-</ul>
-	</nav>
 
-	<div id="contenido" class="container-fluid ui-sortable cerrado">
-		<div class="col-lg-12">
-			<h3>Contenido</h3>
-		<p id="showMenu">Mostrar/ocultar</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa ipsum, velit necessitatibus, nesciunt harum, excepturi porro in sit nobis minus magnam dolorum adipisci vero recusandae. Ratione aspernatur iste, laborum.</p>
-		 <!-- aqui recibo items -->
-<ul id="sortable">
-<p onclick="showPapelera();">Show</p>
-</ul>
-		</div>
+
+<!-- Menu -->
+<nav id="ocultable" class="cerrado">
+
+	<ul id="menu-main" class="menu-visible">
+	<li> <a onclick="showMenuHeaders();">Headers</a></li>
+	<li>Contenidos</li>
+	<li>Contacto</li>
+	<li>Pie de Pagina</li>
+	</ul>
+	<ul id="menu-headers" class=" menuopciones menu-hide">
+	<li><a onclick="showMenuMain();">Regresar</a></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	<li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+
+	<ul id="menu-crews" class="menuopciones menu-hide">
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	<li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+
+	<ul id="menu-footers" class="menuopciones menu-hide">
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-2"><img src="imgs/180/footer-2.jpg" class="imagen"></li>
+	<li class="draggable" data-name="crew-1"><img src="imgs/180/crew-1.jpg" class="imagen"></li>
+	<li class="draggable" data-name="footer-1"><img src="imgs/180/footer-1.jpg" class="imagen"></li>
+	</ul>
+
+
+</nav>
+
+<div id="contenido" class="container-fluid cerrado">
+<div class="col-lg-12">
+	<h3>Contenido</h3>
+	<p id="showMenu">Mostrar/ocultar</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa ipsum, velit necessitatibus, nesciunt harum, excepturi porro in sit nobis minus magnam dolorum adipisci vero recusandae. Ratione aspernatur iste, laborum.</p>
+
+ 	<!-- aqui recibo items -->
+	<div id="receptorWrapp">
+		<ul id="receptor" class="empty">
+
+		</ul>
+
 	</div>
+</div>
+</div>
 
 <script src="js/external/jquery/jquery.js"></script>
 <script src="js/jquery-ui.js"></script>
-<script src="js/drag.js"></script>
+<script src="sidebar.js"></script>
+<script src="core.js"></script>
+<script src="proyecto.js"></script>
 
 
-<script>
-	var ocultable = document.getElementById( 'ocultable' ),
-		showMenu= document.getElementById( 'showMenu' ),
-		showLeftPush = document.getElementById( 'showLeftPush' ),
-		body = document.body;
+<script type="text/javascript">
+	function showMenuMain(){
 		
-	//Funciones menu (ocultar mostrar)
-	showMenu.onclick = function() {
-		if ($('#ocultable').hasClass('abierto')) {
-	    	$( "#ocultable" ).removeClass( "abierto" ).addClass( "cerrado" );
-			$( "#contenido" ).removeClass( "contenidoabierto" ).addClass( "contenidocerrado" );
-		}else{
-			$( "#ocultable" ).removeClass( "cerrado" ).addClass( "abierto" );
-			$( "#contenido" ).removeClass( "contenidocerrado" ).addClass( "contenidoabierto" );
-		}
-	};
+		$( "#menu-headers" ).removeClass( "menu-visible" ).addClass( "menu-hide" );
+		$( "#menu-main" ).removeClass( "menu-hide" ).addClass( "menu-visible" );
+	}
+
+	function showMenuHeaders(){
+		$( "#menu-main" ).removeClass( "menu-visible" ).addClass( "menu-hide" );
+		$( "#menu-headers" ).removeClass( "menu-hide" ).addClass( "menu-visible" );
+	}
 
 
-$(function() {
-    $( "#sortable" ).sortable({
-      revert: true,
-      placeholder: "moviendo"
-    });
-    $( ".draggable" ).draggable({
-      connectToSortable: "#sortable",
-      helper: "clone",
-      revert: "invalid",
-      start: function(){
-		contenido = $(this).data('name');
-		console.log(contenido);
-		},
-		drop: function(){
-			agrandar();
-			recontar();
-			$(this).addClass('eliminable');
-		}
-    });
-    
-
-
-    $( "#papelera" ).sortable({
-      revert: true,
-      placeholder: "moviendo"
-    });
-
-    $( "ul, li" ).disableSelection();
-
-  });
-	
-  function showPapelera(){
-  	$( "#papelera" ).removeClass( "oculta" ).addClass( "visible" );
-  }
-  function hidePapelera(){
-  	$( "#papelera" ).removeClass( "visible" ).addClass( "oculta" );
-  }
-
-  function agrandar(){
-  	$('#sortable .imagen').addClass('imagenfull');
-  }
 </script>
-
 </body>
 </html>

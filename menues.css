@@ -1,0 +1,15 @@
+/* menues */
+#menu-main{
+-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+transition:: 0.5s cubic-bezier(0,-0.09,0,1); display: block;}
+#menu-headers{
+-webkit-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-moz-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-ms-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+-o-transition: 0.5s cubic-bezier(0,-0.09,0,1);
+transition:: 0.5s cubic-bezier(0,-0.09,0,1);  left:-250px; z-index: 120; display: block;}
+.menu-hide{ float:left; width: 240px; margin-left:-250px;}
+.menu-visible{left:0; width: 240px; }
